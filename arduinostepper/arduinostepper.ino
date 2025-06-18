@@ -37,6 +37,7 @@ void loop() {
     stepper.rotate(-360);
   }
   else if(message == "CLOSE"){
+    Serial.println("!! End of serial communication !!")
     Serial.end();
     return;
   }
