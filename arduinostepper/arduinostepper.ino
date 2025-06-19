@@ -31,7 +31,8 @@ void setup() {
   stepper.begin(rpm_int);
   Serial.println("Set target motor RPM to "+rpm_str);
   Serial.println("Write TEST to verify +360° and -360°");
-  Serial.println("Write TURN followed by number of degrees (signed direction) to move the motor");
+  Serial.println("Write TURN followed by a whitespace and the number of degrees (signed direction) to move the motor");
+  Serial.println("Write RPM followed by a whitespace and a number to change motor speed");
   Serial.println("Write CLOSE to end serial communication");
   Serial.println("\n!! End of startup - you can now turn on the voltage supply !!");
 }
@@ -67,6 +68,12 @@ void loop() {
     Serial.println("!! End of serial communication !!");
     Serial.end();
     return;
+  }
+  else if(message.startsWith("RPM ")){
+    message.remove(0,4);
+    int new_rpm = message.toInt();
+    Serial.println("Changed motor speed to RPM" + message);
+    stepper.setRPM(new_rpm);
   }
   else Serial.println("!Invalid command!");
   delay(1000);
